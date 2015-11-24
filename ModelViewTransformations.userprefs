@@ -1,0 +1,36 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="LectureExample/CollisionParticleSystem.cs">
+    <Files>
+      <File FileName="ModelViewTransformations/GameApplication.cs" Line="1" Column="1" />
+      <File FileName="ModelViewTransformations/GameModel.cs" Line="1" Column="1" />
+      <File FileName="ModelViewTransformations/LineDrawer.cs" Line="1" Column="1" />
+      <File FileName="LectureExample/ApplicationController.cs" Line="1" Column="1" />
+      <File FileName="LectureExample/GameModel.cs" Line="1" Column="1" />
+      <File FileName="LectureExample/GameView.cs" Line="1" Column="1" />
+      <File FileName="LectureExample/Camera.cs" Line="1" Column="1" />
+      <File FileName="LectureExample/Shuttle.cs" Line="1" Column="1" />
+      <File FileName="LectureExample/Map.cs" Line="1" Column="1" />
+      <File FileName="LectureExample/LineDrawer.cs" Line="1" Column="1" />
+      <File FileName="LectureExample/Program.cs" Line="1" Column="1" />
+      <File FileName="LectureExample/CollisionParticleSystem.cs" Line="49" Column="4" />
+      <File FileName="LectureExample/IModelObserver.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="LectureExample" expanded="True">
+            <Node name="Content" expanded="True" />
+            <Node name="CollisionParticleSystem.cs" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="ModelViewTransformations/GameView.cs" line="33" offsetX="714" offsetY="736" expression="model.map" liveUpdate="True" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
+</Properties>
