@@ -18,6 +18,7 @@ namespace LectureExample
         GraphicsDeviceManager graphics;
         GameModel model;
 		GameView view;
+		IMGUI imgui;
 
         public ApplicationController()
         {
@@ -51,6 +52,8 @@ namespace LectureExample
             
             //TODO: use this.Content to load your game content here 
 			view = new GameView (model, Content, GraphicsDevice);
+
+			imgui = new IMGUI (Content, GraphicsDevice);
         }
 
         /// <summary>
@@ -60,27 +63,41 @@ namespace LectureExample
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // For Mobile devices, this logic will close the Game when the Back button is pressed
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-			{
+			imgui.startUI ();
+
+			if (model.IsGameOver ()) {
+				//TODO: Meny för att starta om spelet...
+				if (imgui.doButton(new Rectangle(200, 200, 100, 100), Keys.Space)) {
+					model.RestartGame ();
+				}
+			} else if (model.HasWon () ) {
+				//TODO: Meny för att starta om spelet...
+				if (imgui.doButton(new Rectangle(200, 0, 100, 100), Keys.Space)) {
+					model.RestartGame ();
+				}
+			} else {
+				InGameUpdate (gameTime);
+
+			} 
+
+			if (imgui.doButton (new Rectangle (0, 0, 100, 100), Keys.Escape)) {
 				Exit();
 			}
-			if (Keyboard.GetState().IsKeyDown(Keys.Down))
-			{
-				model.player.down ();
-			}
-
-			if (Keyboard.GetState().IsKeyDown(Keys.Up))
-			{
-				model.player.up ();
-			}
-
-
-			model.Update ((float)gameTime.ElapsedGameTime.TotalSeconds, view);
 
             // TODO: Add your update logic here			
             base.Update(gameTime);
         }
+
+		void InGameUpdate (GameTime gameTime)
+		{
+			if (Keyboard.GetState ().IsKeyDown (Keys.Down)) {
+				model.player.down ();
+			}
+			if (Keyboard.GetState ().IsKeyDown (Keys.Up)) {
+				model.player.up ();
+			}
+			model.Update ((float)gameTime.ElapsedGameTime.TotalSeconds, view);
+		}
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -93,8 +110,8 @@ namespace LectureExample
             //TODO: Add your drawing code here
 
 
-			view.DrawGame (GraphicsDevice);
-
+			view.DrawGame (GraphicsDevice, (float)gameTime.ElapsedGameTime.TotalSeconds);
+			imgui.drawUI ();
             
             base.Draw(gameTime);
         }

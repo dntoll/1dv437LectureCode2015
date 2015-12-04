@@ -60,6 +60,8 @@
     <Compile Include="Map.cs" />
     <Compile Include="CollisionParticleSystem.cs" />
     <Compile Include="IModelObserver.cs" />
+    <Compile Include="IMGUI.cs" />
+    <Compile Include="Enemy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Icon.png" />

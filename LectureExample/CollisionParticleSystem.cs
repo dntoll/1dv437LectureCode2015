@@ -13,39 +13,71 @@ namespace LectureExample
 {
 	class CollisionParticleSystem
 {
-		Vector2[] particlePositions = new Vector2[10];
+		class Particle {
+			public Vector2 centerModelPosition;
+			public Vector2 modelVelocity;
+			public static Vector2 gravity = new Vector2(0, 9.82f);
+			public Particle (Vector2 startPosition, Vector2 modelVelocity)
+			{
+				centerModelPosition = startPosition;
+				this.modelVelocity = modelVelocity; 
+			}
+
+			public void update (float elapsedTime)
+			{
+
+				centerModelPosition = centerModelPosition + modelVelocity * elapsedTime;
+
+				modelVelocity = modelVelocity + gravity * elapsedTime;
+			}
+		}
+		static int numParticles = 100;
+		Particle[] particles = new Particle[numParticles];
+
 		public void doCollision (Vector2 centerModelPosition)
 		{
 			//skapa particlar
 			Random r = new Random ();
-			for (int i= 0; i< 10; i++) {
+			for (int i= 0; i< numParticles; i++) {
 				float x = 2.0f * (float)r.NextDouble () - 1;
 				float y = 2.0f * (float)r.NextDouble () - 1;
 				Vector2 rand=  new Vector2 (x, y);
-				particlePositions[i] = centerModelPosition + rand * 0.1f;
+				rand.Normalize ();
+
+				Vector2 modelVelocity = rand;
+				float length = (float)r.NextDouble () * 0.1f; 
+
+
+				particles[i] = new Particle(centerModelPosition + rand * length, modelVelocity);
 			}
 		}
 
-		public void draw (Camera camera, SpriteBatch spriteBatch, Texture2D particles)
+		public void draw (Camera camera, SpriteBatch spriteBatch, Texture2D particleTexture)
 		{
 			//rita ut partiklar
-			for (int i = 0 ; i< 10; i++) {
-				if (particlePositions [i] != null) {
-					Vector2 screenPos = camera.getViewFromModelPosition (particlePositions [i]);
+			for (int i = 0 ; i< numParticles; i++) {
+
+				if (particles [i] != null) {
+					Particle toBeRendered = particles [i];
+					Vector2 screenPos = camera.getViewFromModelPosition (toBeRendered.centerModelPosition);
 
 
-					spriteBatch.Draw (particles, 
-					                  screenPos, 
-					                  particles.Bounds, 
-					                  Color.White, 3.14f/2.0f, 
-					                  new Vector2 (particles.Bounds.Width / 2, particles.Bounds.Height / 2), 
-					                  0.1f, SpriteEffects.None, 0);
+					spriteBatch.Draw (particleTexture, 
+					                 screenPos, 
+					                 particleTexture.Bounds, 
+					                 Color.White, 3.14f / 2.0f, 
+					                 new Vector2 (particleTexture.Bounds.Width / 2, particleTexture.Bounds.Height / 2), 
+					                 0.1f, SpriteEffects.None, 0);
 				}
 			}
 		}
 
 		public void  update(float elapsedTime) {
-
+			for (int i = 0; i< numParticles; i++) {
+				if (particles [i] != null) {
+					particles [i].update (elapsedTime);
+				}
+			}
 
 		}
 }

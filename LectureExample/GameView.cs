@@ -36,7 +36,7 @@ namespace LectureExample
 
 		}
 
-		public void DrawGame(GraphicsDevice device) {
+		public void DrawGame(GraphicsDevice device, float timeElapsed) {
 
 			camera.centerOn (model.player.centerModelPosition);
 			Vector2 shuttleCenterWindowPosition = camera.getViewFromModelPosition (model.player.centerModelPosition);
@@ -54,6 +54,17 @@ namespace LectureExample
 			                  Color.White, 3.14f/2.0f, 
 			                  new Vector2 (shuttleTexture.Bounds.Width / 2, shuttleTexture.Bounds.Height / 2), 
 			                  shuttleScale, SpriteEffects.None, 0);
+
+
+			for (int i = 0; i < GameModel.MAX_ENEMIES; i++) {
+				Vector2 enemyCenterWindowPosition = camera.getViewFromModelPosition (model.enemies[i].modelCenterPosition);
+				spriteBatch.Draw (shuttleTexture, 
+				                  enemyCenterWindowPosition, 
+				                  shuttleTexture.Bounds, 
+				                  Color.White, 3.14f/2.0f, 
+				                  new Vector2 (shuttleTexture.Bounds.Width / 2, shuttleTexture.Bounds.Height / 2), 
+				                  shuttleScale, SpriteEffects.None, 0);
+			}
 
 			for (int i = 0; i < model.player.hitPoints; i++) {
 				spriteBatch.Draw (shuttleTexture, new Vector2 (30 + 30 * i, 30), Color.Wheat);
@@ -82,7 +93,7 @@ namespace LectureExample
 				lines.DrawLine (spriteBatch, lineStart, lineEnd, Color.White);
 				lineStart = lineEnd;
 			}
-
+			particles.update (timeElapsed);
 			particles.draw (camera, spriteBatch, shuttleTexture);
 
 			spriteBatch.End ();
